@@ -1,0 +1,13 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-manager-v2-service
+spec:
+  type: NodePort
+  selector:
+    app: task-manager-v2
+  ports:
+    - port: 5001
+      targetPort: 5001
+      nodePort: 30082

@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-manager-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-manager-v2
+  template:
+    metadata:
+      labels:
+        app: task-manager-v2
+    spec:
+      containers:
+        - name: task-manager-v2
+          image: gokul141006/task-manager:v2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          env:
+            - name: PORT
+              value: "5001"
