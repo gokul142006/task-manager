@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'docker build -t gokul141006/task-manager:v2 .'
+                sh 'docker build -t gokul141006/task-manager:v3 ./v3'
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
                     sh '''
                         echo "$DOCKER_PASS" | docker login \
                           -u "$DOCKER_USER" --password-stdin
-                        docker push gokul141006/task-manager:v2
+                        docker push gokul141006/task-manager:v3
                         docker logout
                     '''
                 }
@@ -47,19 +47,19 @@ pipeline {
                           --server=https://host.docker.internal:52844 \
                           --token="$K8S_TOKEN" \
                           --insecure-skip-tls-verify=true \
-                          apply -f k8s/deployment-v2.yaml
+                          apply -f k8s/deployment-v3.yaml
 
                         kubectl \
                           --server=https://host.docker.internal:52844 \
                           --token="$K8S_TOKEN" \
                           --insecure-skip-tls-verify=true \
-                          apply -f k8s/service-v2.yaml
+                          apply -f k8s/service-v3.yaml
 
                         kubectl \
                           --server=https://host.docker.internal:52844 \
                           --token="$K8S_TOKEN" \
                           --insecure-skip-tls-verify=true \
-                          rollout status deployment/task-manager-v2
+                          rollout status deployment/task-manager-v3
                     '''
                 }
             }
