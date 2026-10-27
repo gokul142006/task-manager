@@ -1,4 +1,4 @@
-
+import os
 from flask import Flask, request, redirect, render_template_string
 
 app = Flask(__name__)
@@ -143,6 +143,6 @@ def health():
 if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
-        port=5003,
+        port=int(os.environ.get("PORT", 5001)),
         debug=False
     )
